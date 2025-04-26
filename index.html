@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Google Books API</h1>
+    <ul id="books"></ul>
+    <script>
+        var key="Removed"
+        var url = 'https://www.googleapis.com/books/v1/volumes?q=';
+        var search = 'javascript';
+
+        var httpRequest = new XMLHttpRequest();
+
+        httpRequest.onreadystatechange = function() {
+            console.log(httpRequest.readyState);
+            console.log(httpRequest.responseText);
+
+            //if the request is finished loading
+            if(httpRequest.readyState === XMLHttpRequest.DONE)
+            {
+                //convert the string response to JSON object
+                var data = JSON.parse(httpRequest.responseText);
+                console.log(data.items);
+                //create a reference to the books UL
+                var books = document.getElementById('books');
+                
+                //loop through the book from the JSON
+                for (var i = 0; i < data.items.length; i++) {
+                    //fetch title rom the next book
+                    var title = data.items[i].volumeInfo.title;
+                    console.log(title);
+                    var coverimage = data.items[i].volumeInfo.imageLinks.thumbnail;
+                    var link = data.items[i].volumeInfo.infoLink;
+                    //add book to UL
+                    var newBook = "<li>" + "<a href='" + link + "'>" + title + "</a>" + "<br>" + "<img src='" + coverimage + "' alt='javascript' id='coverimage'>" + "</li>";
+                    books.innerHTML += newBook;
+                }
+                
+            }
+        }
+
+        httpRequest.open('GET', url + search);
+        httpRequest.send();
+
+    </script>
+</body>
+</html>
