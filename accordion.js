@@ -2,7 +2,7 @@ function accordion_toggle(sectionId) {
   const allSections = document.querySelectorAll('.accordion-section');
   const section = document.getElementById(sectionId);
 
-  //hide all the  sections except the one that is being toggled
+  //hiding sections except the one that is toggled
   allSections.forEach((s) => {
     if (s.id !== sectionId) {
       s.style.display = "none";
